@@ -8,12 +8,12 @@ namespace HotelMSDivided.WEB.Models
 {
     public class HotelRoomsViewModel
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public HotelRoomsViewModel()
-        {
-            this.HotelsRoomRegistration = new HashSet<HotelsRoomRegistrationViewModel>();
-            this.OrdersRegistration = new HashSet<OrdersRegistrationViewModel>();
-        }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        //public HotelRoomsViewModel()
+        //{
+        //    this.HotelsRoomRegistration = new HashSet<HotelsRoomRegistrationViewModel>();
+        //    this.OrdersRegistration = new HashSet<OrdersRegistrationViewModel>();
+        //}
 
         [Display(Name = "Room number")]
         public int RoomNumber { get; set; }
@@ -26,9 +26,9 @@ namespace HotelMSDivided.WEB.Models
         public int RoomsAmount { get; set; }
 
         public virtual RoomClassesViewModel RoomClasses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HotelsRoomRegistrationViewModel> HotelsRoomRegistration { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrdersRegistrationViewModel> OrdersRegistration { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<HotelsRoomRegistrationViewModel> HotelsRoomRegistration { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<OrdersRegistrationViewModel> OrdersRegistration { get; set; }
     }
 }

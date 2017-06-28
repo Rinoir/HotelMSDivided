@@ -11,6 +11,7 @@ namespace HotelMSDivided.BLL.Interfaces
     {
         HotelRoomsDTO GetHotelRoom(int? id);
         IEnumerable<HotelRoomsDTO> GetHotelRooms();
+        IEnumerable<RoomClassesDTO> GetRoomClasses();
         void Create(HotelRoomsDTO room);
         void Update(HotelRoomsDTO room);
         void Dispose();

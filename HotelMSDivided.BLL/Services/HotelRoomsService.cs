@@ -8,6 +8,7 @@ using HotelMSDivided.BLL.Infrastructure;
 using HotelMSDivided.BLL.Interfaces;
 using HotelMSDivided.DAL.Entities;
 using HotelMSDivided.DAL.Interfaces;
+using HotelMSDivided.DAL.Repositories;
 using AutoMapper;
 
 namespace HotelMSDivided.BLL.Services
@@ -52,14 +53,44 @@ namespace HotelMSDivided.BLL.Services
                 throw new ValidationException("No room with such number", "");
             }
 
-            Mapper.Initialize(cfg => cfg.CreateMap<HotelRooms, HotelRoomsDTO>());
-            return Mapper.Map<HotelRooms, HotelRoomsDTO>(room);
+            var classService = new RoomClassesService(new ContextUnitOfWork());
+            var roomDTO = new HotelRoomsDTO()
+            {
+                RoomNumber = room.RoomNumber,
+                RoomClassCode = room.RoomClassCode,
+                Floor = room.Floor,
+                DayCost = room.DayCost,
+                RoomsAmount = room.RoomsAmount,
+                RoomClasses = classService.GetRoomClass(room.RoomClassCode)
+            };
+            return roomDTO;
         }
 
         public IEnumerable<HotelRoomsDTO> GetHotelRooms()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<HotelRooms, HotelRoomsDTO>());
-            return Mapper.Map<IEnumerable<HotelRooms>, List<HotelRoomsDTO>>(db.HotelRooms.GetAll());
+            var hotelRooms = db.HotelRooms.GetAll();
+            var hotelRoomsDTO = new List<HotelRoomsDTO>();
+            var classService = new RoomClassesService(new ContextUnitOfWork());
+            foreach (var item in hotelRooms)
+            {
+                hotelRoomsDTO.Add(new HotelRoomsDTO()
+                {
+                    RoomNumber = item.RoomNumber,
+                    RoomClassCode = item.RoomClassCode,
+                    Floor = item.Floor,
+                    DayCost = item.DayCost,
+                    RoomsAmount = item.RoomsAmount,
+                    RoomClasses = classService.GetRoomClass(item.RoomClassCode)
+                });
+            }
+            
+            return hotelRoomsDTO;
+        }
+
+        public IEnumerable<RoomClassesDTO> GetRoomClasses()
+        {
+            var classService = new RoomClassesService(new ContextUnitOfWork());
+            return classService.GetRoomClasses();
         }
 
         public void Update(HotelRoomsDTO room)
