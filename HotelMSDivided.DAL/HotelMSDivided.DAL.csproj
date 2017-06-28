@@ -163,13 +163,6 @@
       <DependentUpon>HotelModel.edmx</DependentUpon>
       <LastGenOutput>HotelModel.cs</LastGenOutput>
     </Content>
-    <Content Include="App_Data\HotelDataBase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\HotelDataBase_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>HotelDataBase.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
