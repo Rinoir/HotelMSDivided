@@ -11,7 +11,7 @@ namespace HotelMSDivided.WEB.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HotelGuestsViewModel()
         {
-            this.GuestPassports = new HashSet<GuestPassportsViewModel>();
+            this.GuestPassport = new GuestPassportsViewModel();
             this.GuestsPhoneNumbers = new HashSet<GuestsPhoneNumbersViewModel>();
             this.HotelsRoomRegistration = new HashSet<HotelsRoomRegistrationViewModel>();
             this.OrdersRegistration = new HashSet<OrdersRegistrationViewModel>();
@@ -30,7 +30,7 @@ namespace HotelMSDivided.WEB.Models
         public string Patronymic { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GuestPassportsViewModel> GuestPassports { get; set; }
+        public virtual GuestPassportsViewModel GuestPassport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GuestsPhoneNumbersViewModel> GuestsPhoneNumbers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

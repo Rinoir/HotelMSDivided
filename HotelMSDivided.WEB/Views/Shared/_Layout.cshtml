@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title – приложение ASP.NET</title>
@@ -17,13 +17,33 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("GRAND HOTEL", "Index", "HotelRooms", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home")</li>
-                    <li>@Html.ActionLink("О программе", "About", "Home")</li>
-                    <li>@Html.ActionLink("Контакт", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Home Page", "Index", "HotelRooms")</li>
+                    @if (Request.Cookies["Login"] == null || Request.Cookies["Login"].Value == "")
+                    {
+                        <li>@Html.ActionLink("Sign in", "SignIn", "HotelGuests")</li>
+                        <li>@Html.ActionLink("Sign up", "Create", "HotelGuests")</li>
+                    }
+                    else
+                    {
+                        string login = Request.Cookies["Login"].Value;
+                        string status = Request.Cookies["Status"].Value;
+                        if (status.Equals("Guest"))
+                        {
+                            <li>@Html.ActionLink(login, "Details", "HotelGuests", new { id = login }, null)</li>
+                            <li>@Html.ActionLink("Cart", "Edit", "OrdersRegistrations", new { login = login }, null)</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("All Users", "Index", "HotelGuests")</li>
+                            <li>@Html.ActionLink(login, "Details", "HotelStaffs", new { id = login }, null)</li>
+                            <li>@Html.ActionLink("Orders", "Index", "OrdersRegistrations")</li>
+                        }
+                        <li>@Html.ActionLink("Sign out", "SignOut", "Home")</li>
+                    }
                 </ul>
             </div>
         </div>
@@ -33,6 +53,7 @@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
+            <p>@Html.ActionLink("Sign in as employee", "SignIn", "HotelStaffs")</p>
         </footer>
     </div>
 

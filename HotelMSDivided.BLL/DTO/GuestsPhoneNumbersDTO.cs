@@ -16,7 +16,7 @@ namespace HotelMSDivided.BLL.DTO
         [StringLength(18, MinimumLength = 18, ErrorMessage = "Phone number must be written in format +38(0__)-___-__-__")]
         public string PhoneNumber { get; set; }
 
-        public virtual HotelGuestsDTO HotelGuests { get; set; }
+        //public virtual HotelGuestsDTO HotelGuests { get; set; }
         public virtual PhoneNumbersTypesDTO PhoneNumbersTypes { get; set; }
     }
 }

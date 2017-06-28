@@ -17,6 +17,6 @@ namespace HotelMSDivided.BLL.DTO
         [Display(Name = "Passport Number")]
         public int PassportNumber { get; set; }
 
-        public virtual HotelGuestsDTO HotelGuests { get; set; }
+        //public virtual HotelGuestsDTO HotelGuests { get; set; }
     }
 }

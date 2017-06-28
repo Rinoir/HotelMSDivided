@@ -71,14 +71,62 @@ namespace HotelMSDivided.BLL.Services
                 throw new ValidationException("Wrong login", "");
             }
 
-            Mapper.Initialize(cfg => cfg.CreateMap<HotelGuests, HotelGuestsDTO>());
-            return Mapper.Map<HotelGuests, HotelGuestsDTO>(guest);
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<GuestPassports, GuestPassportsDTO>().ReverseMap();
+                cfg.CreateMap<GuestsPhoneNumbers, GuestsPhoneNumbersDTO>().ReverseMap();
+                cfg.CreateMap<PhoneNumbersTypes, PhoneNumbersTypesDTO>().ReverseMap();
+                cfg.CreateMap<HotelsRoomRegistration, HotelsRoomRegistrationDTO>().ReverseMap();
+                cfg.CreateMap<OrdersRegistration, OrdersRegistrationDTO>().ReverseMap();
+                cfg.CreateMap<OrderStatuses, OrderStatusesDTO>().ReverseMap();
+                cfg.CreateMap<PaymentMethods, PaymentMethodsDTO>().ReverseMap();
+            });
+
+            var guestDTO = new HotelGuestsDTO()
+            {
+                GuestMail = guest.GuestMail,
+                Surname = guest.Surname,
+                Name = guest.Name,
+                Patronymic = guest.Patronymic,
+                GuestPassport = Mapper.Map<GuestPassports, GuestPassportsDTO>(guest.GuestPassports.First()),
+                GuestsPhoneNumbers = Mapper.Map<ICollection<GuestsPhoneNumbers>, ICollection<GuestsPhoneNumbersDTO>>(guest.GuestsPhoneNumbers),
+                HotelsRoomRegistration = Mapper.Map<ICollection<HotelsRoomRegistration>, ICollection<HotelsRoomRegistrationDTO>>(guest.HotelsRoomRegistration),
+                OrdersRegistration = Mapper.Map<ICollection<OrdersRegistration>, ICollection<OrdersRegistrationDTO>>(guest.OrdersRegistration)
+            };
+
+            return guestDTO;
         }
 
         public IEnumerable<HotelGuestsDTO> GetHotelGuests()
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<HotelGuests, HotelGuestsDTO>());
-            return Mapper.Map<IEnumerable<HotelGuests>, List<HotelGuestsDTO>>(db.HotelGuests.GetAll());
+            Mapper.Initialize(cfg => 
+            {
+                cfg.CreateMap<GuestPassports, GuestPassportsDTO>().ReverseMap();
+                cfg.CreateMap<GuestsPhoneNumbers, GuestsPhoneNumbersDTO>().ReverseMap();
+                cfg.CreateMap<PhoneNumbersTypes, PhoneNumbersTypesDTO>().ReverseMap();
+                cfg.CreateMap<HotelsRoomRegistration, HotelsRoomRegistrationDTO>().ReverseMap();
+                cfg.CreateMap<OrdersRegistration, OrdersRegistrationDTO>().ReverseMap();
+                cfg.CreateMap<OrderStatuses, OrderStatusesDTO>().ReverseMap();
+                cfg.CreateMap<PaymentMethods, PaymentMethodsDTO>().ReverseMap();
+            });
+            var guests = db.HotelGuests.GetAll();
+            var guestsDTO = new List<HotelGuestsDTO>();
+
+            foreach (var item in guests)
+            {
+                guestsDTO.Add(new HotelGuestsDTO()
+                {
+                    GuestMail = item.GuestMail,
+                    Surname = item.Surname,
+                    Name = item.Name,
+                    Patronymic = item.Patronymic,
+                    GuestPassport = Mapper.Map<GuestPassports, GuestPassportsDTO>(item.GuestPassports.First()),
+                    GuestsPhoneNumbers = Mapper.Map<ICollection<GuestsPhoneNumbers>, ICollection<GuestsPhoneNumbersDTO>>(item.GuestsPhoneNumbers),
+                    HotelsRoomRegistration = Mapper.Map<ICollection<HotelsRoomRegistration>, ICollection<HotelsRoomRegistrationDTO>>(item.HotelsRoomRegistration),
+                    OrdersRegistration = Mapper.Map<ICollection<OrdersRegistration>, ICollection<OrdersRegistrationDTO>>(item.OrdersRegistration)
+                });
+            }
+            return guestsDTO;
         }
     }
 }

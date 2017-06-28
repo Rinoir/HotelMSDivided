@@ -1,0 +1,179 @@
+﻿@model HotelMSDivided.BLL.DTO.HotelGuestsDTO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HotelGuests</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patronymic):
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+
+        <dt>
+            Passport Data:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GuestPassport.PassportSerialNumber)
+            @Html.DisplayFor(model => model.GuestPassport.PassportNumber)
+        </dd>
+
+        <dt>
+            Phone Numbers:
+        </dt>
+
+        <dd>
+            @if (Model.GuestsPhoneNumbers.Count == 1)
+            {
+                @Html.DisplayFor(model => model.GuestsPhoneNumbers.First().PhoneNumbersTypes.PhoneNumberTypeName)
+                @Html.DisplayFor(model => model.GuestsPhoneNumbers.First().PhoneNumber)
+            }
+            else
+            {
+                <br />
+                <ul>
+                    @foreach (var element in Model.GuestsPhoneNumbers)
+                    {
+                        <li>
+                            @Html.DisplayFor(modelItem => element.PhoneNumbersTypes.PhoneNumberTypeName):
+                            @Html.DisplayFor(modelItem => element.PhoneNumber)
+                            @Html.ActionLink("Delete phone number", "Delete", "GuestsPhoneNumbers", new { number = element.PhoneNumber }, null)
+                        </li>
+                    }
+                </ul>
+            }
+        </dd>
+
+        <dt>
+            Current order:
+        </dt>
+
+        @if (Model.OrdersRegistration.Count == 0)
+        {
+            <dd>Nothing</dd>
+        }
+        else
+        {
+            var order = Model.OrdersRegistration.First();
+            int number = order.RoomNumber;
+
+            <dd>
+                Room number: @Html.ActionLink(number.ToString(), "Details", "HotelRooms", new { id = number }, null)
+            </dd>
+
+            <dd>
+                Booking date: @Html.DisplayFor(model => order.BookingDate)
+            </dd>
+
+            <dd>
+                Arrival date: @Html.DisplayFor(model => order.ArrivalDate)
+            </dd>
+
+            <dd>
+                Leaving date: @Html.DisplayFor(model => order.LeavingDate)
+            </dd>
+
+            <dd>
+                Status: @Html.DisplayFor(model => order.OrderStatuses.StatusName)
+            </dd>
+        }
+
+        <dt>
+            Orders history:
+        </dt>
+
+        @if (Model.HotelsRoomRegistration.Count == 0)
+        {
+            <dd>Nothing</dd>
+        }
+        else
+        {
+            var registrations = Model.HotelsRoomRegistration;
+
+            <dd>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => registrations.First().BookedRoomNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => registrations.First().BookingDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => registrations.First().ArrivalDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => registrations.First().LeavingDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => registrations.First().ActualLeavingDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => registrations.First().PaymentMethods.PaymentMethodName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => registrations.First().OrderStatuses.StatusName)
+                        </th>
+                    </tr>
+                    @foreach (var order in registrations)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(order.BookedRoomNumber.ToString(), "Details", "HotelRooms", new { id = order.BookedRoomNumber }, null)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => order.BookingDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => order.ArrivalDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => order.LeavingDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => order.ActualLeavingDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => order.PaymentMethods.PaymentMethodName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => order.OrderStatuses.StatusName)
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </dd>
+        }
+
+        @Html.ActionLink("Add New Phone Number", "AddPhone", new { login = Model.GuestMail })
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.GuestMail }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

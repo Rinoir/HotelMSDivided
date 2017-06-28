@@ -164,6 +164,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelGuestsController.cs" />
     <Compile Include="Controllers\HotelRoomsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -242,6 +243,9 @@
     <Content Include="Views\HotelRooms\Index.cshtml" />
     <Content Include="Views\HotelRooms\Details.cshtml" />
     <Content Include="Views\HotelRooms\Create.cshtml" />
+    <Content Include="Views\HotelRooms\Edit.cshtml" />
+    <Content Include="Views\HotelGuests\Index.cshtml" />
+    <Content Include="Views\HotelGuests\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

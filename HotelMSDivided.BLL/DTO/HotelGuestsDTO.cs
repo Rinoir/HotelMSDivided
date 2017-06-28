@@ -12,7 +12,7 @@ namespace HotelMSDivided.BLL.DTO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HotelGuestsDTO()
         {
-            this.GuestPassports = new HashSet<GuestPassportsDTO>();
+            this.GuestPassport = new GuestPassportsDTO();
             this.GuestsPhoneNumbers = new HashSet<GuestsPhoneNumbersDTO>();
             this.HotelsRoomRegistration = new HashSet<HotelsRoomRegistrationDTO>();
             this.OrdersRegistration = new HashSet<OrdersRegistrationDTO>();
@@ -31,7 +31,7 @@ namespace HotelMSDivided.BLL.DTO
         public string Patronymic { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GuestPassportsDTO> GuestPassports { get; set; }
+        public virtual GuestPassportsDTO GuestPassport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GuestsPhoneNumbersDTO> GuestsPhoneNumbers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

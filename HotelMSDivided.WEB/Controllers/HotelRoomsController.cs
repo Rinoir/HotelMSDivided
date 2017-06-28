@@ -87,69 +87,47 @@ namespace HotelMSDivided.WEB.Controllers
             ViewBag.RoomClassCode = new SelectList(roomService.GetRoomClasses(), "RoomClassCode", "RoomClassName", hotelRooms.RoomClassCode);
             return View(hotelRooms);
         }
-
-        /////////////////////////////NOT YET READY///////////////////////////
-        //// GET: HotelRooms/Edit/5
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    HotelRooms hotelRooms = db.HotelRooms.Find(id);
-        //    if (hotelRooms == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    ViewBag.RoomClassCode = new SelectList(db.RoomClasses, "RoomClassCode", "RoomClassName", hotelRooms.RoomClassCode);
-        //    return View(hotelRooms);
-        //}
-
-        /////////////////////////////NOT YET READY///////////////////////////
+        
+        // GET: HotelRooms/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<HotelRoomsDTO, HotelRoomsViewModel>().ReverseMap();
+                cfg.CreateMap<RoomClassesDTO, RoomClassesViewModel>().ReverseMap();
+            });
+            var hotelRooms = Mapper.Map<HotelRoomsDTO, HotelRoomsViewModel>(roomService.GetHotelRoom(id));
+            if (hotelRooms == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RoomClassCode = new SelectList(roomService.GetRoomClasses(), "RoomClassCode", "RoomClassName", hotelRooms.RoomClassCode);
+            return View(hotelRooms);
+        }
+        
         //// POST: HotelRooms/Edit/5
-        //// Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
-        //// сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "RoomNumber,RoomClassCode,Floor,DayCost,RoomsAmount")] HotelRooms hotelRooms)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(hotelRooms).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.RoomClassCode = new SelectList(db.RoomClasses, "RoomClassCode", "RoomClassName", hotelRooms.RoomClassCode);
-        //    return View(hotelRooms);
-        //}
-
-        /////////////////////////////NOT YET READY///////////////////////////
-        //// GET: HotelRooms/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    HotelRooms hotelRooms = db.HotelRooms.Find(id);
-        //    if (hotelRooms == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(hotelRooms);
-        //}
-
-        /////////////////////////////NOT YET READY///////////////////////////
-        //// POST: HotelRooms/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    HotelRooms hotelRooms = db.HotelRooms.Find(id);
-        //    db.HotelRooms.Remove(hotelRooms);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "RoomNumber,RoomClassCode,Floor,DayCost,RoomsAmount")] HotelRoomsViewModel hotelRooms)
+        {
+            if (ModelState.IsValid)
+            {
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<HotelRoomsViewModel, HotelRoomsDTO>().ReverseMap();
+                    cfg.CreateMap<RoomClassesViewModel, RoomClassesDTO>().ReverseMap();
+                });
+                var hotelRoomsDTO = Mapper.Map<HotelRoomsViewModel, HotelRoomsDTO>(hotelRooms);
+                roomService.Update(hotelRoomsDTO);
+                return RedirectToAction("Details", new { id = hotelRoomsDTO.RoomNumber });
+            }
+            ViewBag.RoomClassCode = new SelectList(roomService.GetRoomClasses(), "RoomClassCode", "RoomClassName", hotelRooms.RoomClassCode);
+            return View(hotelRooms);
+        }
 
         protected override void Dispose(bool disposing)
         {
