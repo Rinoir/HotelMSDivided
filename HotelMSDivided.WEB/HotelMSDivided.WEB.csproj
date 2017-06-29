@@ -163,12 +163,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\GuestsPhoneNumbersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelGuestsController.cs" />
     <Compile Include="Controllers\HotelRoomsController.cs" />
+    <Compile Include="Controllers\HotelStaffsController.cs" />
+    <Compile Include="Controllers\OrdersRegistrationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HashChecker\Checker.cs" />
     <Compile Include="Models\EmployeesPositionsViewModel.cs" />
     <Compile Include="Models\GuestPassportsViewModel.cs" />
     <Compile Include="Models\GuestsPhoneNumbersViewModel.cs" />
@@ -246,6 +250,14 @@
     <Content Include="Views\HotelRooms\Edit.cshtml" />
     <Content Include="Views\HotelGuests\Index.cshtml" />
     <Content Include="Views\HotelGuests\Details.cshtml" />
+    <Content Include="Views\HotelGuests\SignIn.cshtml" />
+    <Content Include="Views\HotelGuests\Create.cshtml" />
+    <Content Include="Views\GuestsPhoneNumbers\Create.cshtml" />
+    <Content Include="Views\GuestsPhoneNumbers\Delete.cshtml" />
+    <Content Include="Views\HotelStaffs\SignIn.cshtml" />
+    <Content Include="Views\HotelStaffs\Details.cshtml" />
+    <Content Include="Views\OrdersRegistrations\Index.cshtml" />
+    <Content Include="Views\OrdersRegistrations\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

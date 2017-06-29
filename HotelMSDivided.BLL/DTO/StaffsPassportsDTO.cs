@@ -13,6 +13,6 @@ namespace HotelMSDivided.BLL.DTO
         public string PassportSerialNumber { get; set; }
         public int PassportNumber { get; set; }
 
-        public virtual HotelStaffDTO HotelStaff { get; set; }
+        //public virtual HotelStaffDTO HotelStaff { get; set; }
     }
 }

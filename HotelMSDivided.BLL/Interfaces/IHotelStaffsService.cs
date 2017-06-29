@@ -10,6 +10,7 @@ namespace HotelMSDivided.BLL.Interfaces
     public interface IHotelStaffsService
     {
         HotelStaffDTO GetHotelEmployee(string login);
+        bool IsExists(string login);
         void Dispose();
     }
 }

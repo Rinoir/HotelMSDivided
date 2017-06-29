@@ -91,6 +91,8 @@
     <Compile Include="Interfaces\IHotelsRoomRegistrationsService.cs" />
     <Compile Include="Interfaces\IHotelStaffsService.cs" />
     <Compile Include="Interfaces\IOrdersRegistrationsService.cs" />
+    <Compile Include="Interfaces\IPaymentMethodsService.cs" />
+    <Compile Include="Interfaces\IPhoneNumbersTypesService.cs" />
     <Compile Include="Interfaces\IRoomClassesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GuestsPhoneNumbersService.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="Services\HotelsRoomRegistrationsService.cs" />
     <Compile Include="Services\HotelStaffsService.cs" />
     <Compile Include="Services\OrdersRegistrationsService.cs" />
+    <Compile Include="Services\PaymentMethodsService.cs" />
+    <Compile Include="Services\PhoneNumbersTypesService.cs" />
     <Compile Include="Services\RoomClassesService.cs" />
   </ItemGroup>
   <ItemGroup>

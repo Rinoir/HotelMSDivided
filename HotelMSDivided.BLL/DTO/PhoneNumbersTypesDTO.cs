@@ -16,8 +16,8 @@ namespace HotelMSDivided.BLL.DTO
         //    this.StaffsPhoneNumbers = new HashSet<StaffsPhoneNumbersDTO>();
         //}
 
-        public int PhoneNumberTypeCode { get; set; }
         [Display(Name = "Number Type")]
+        public int PhoneNumberTypeCode { get; set; }
         public string PhoneNumberTypeName { get; set; }
 
         //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

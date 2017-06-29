@@ -9,7 +9,9 @@ namespace HotelMSDivided.BLL.Interfaces
 {
     public interface IGuestsPhoneNumbersService
     {
+        GuestsPhoneNumbersDTO GetPhoneNumber(int? id);
         void Create(GuestsPhoneNumbersDTO guestPhone);
+        IEnumerable<PhoneNumbersTypesDTO> GetNumbersTypes();
         void Delete(int id);
         void Dispose();
     }

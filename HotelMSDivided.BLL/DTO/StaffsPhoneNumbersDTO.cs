@@ -13,7 +13,7 @@ namespace HotelMSDivided.BLL.DTO
         public int PhoneNumberTypeCode { get; set; }
         public string PhoneNumber { get; set; }
 
-        public virtual HotelStaffDTO HotelStaff { get; set; }
+        //public virtual HotelStaffDTO HotelStaff { get; set; }
         public virtual PhoneNumbersTypesDTO PhoneNumbersTypes { get; set; }
     }
 }

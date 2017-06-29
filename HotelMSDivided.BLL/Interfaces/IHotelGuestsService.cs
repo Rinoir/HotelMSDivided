@@ -11,7 +11,9 @@ namespace HotelMSDivided.BLL.Interfaces
     {
         IEnumerable<HotelGuestsDTO> GetHotelGuests();
         HotelGuestsDTO GetHotelGuest(string login);
+        IEnumerable<PhoneNumbersTypesDTO> GetNumbersTypes();
         void Create(GuestModel guest);
+        bool IsExists(string login);
         void Dispose();
     }
 }

@@ -12,7 +12,7 @@ namespace HotelMSDivided.WEB.Models
         public HotelStaffViewModel()
         {
             this.HotelsRoomRegistration = new HashSet<HotelsRoomRegistrationViewModel>();
-            this.StaffsPassports = new HashSet<StaffsPassportsViewModel>();
+            this.StaffsPassport = new StaffsPassportsViewModel();
             this.StaffsPhoneNumbers = new HashSet<StaffsPhoneNumbersViewModel>();
         }
 
@@ -29,7 +29,7 @@ namespace HotelMSDivided.WEB.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HotelsRoomRegistrationViewModel> HotelsRoomRegistration { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StaffsPassportsViewModel> StaffsPassports { get; set; }
+        public virtual StaffsPassportsViewModel StaffsPassport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StaffsPhoneNumbersViewModel> StaffsPhoneNumbers { get; set; }
     }

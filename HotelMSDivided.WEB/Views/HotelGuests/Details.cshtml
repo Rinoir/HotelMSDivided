@@ -62,7 +62,7 @@
                         <li>
                             @Html.DisplayFor(modelItem => element.PhoneNumbersTypes.PhoneNumberTypeName):
                             @Html.DisplayFor(modelItem => element.PhoneNumber)
-                            @Html.ActionLink("Delete phone number", "Delete", "GuestsPhoneNumbers", new { number = element.PhoneNumber }, null)
+                            @Html.ActionLink("Delete phone number", "Delete", "GuestsPhoneNumbers", new { id = element.Id }, null)
                         </li>
                     }
                 </ul>
@@ -170,7 +170,7 @@
             </dd>
         }
 
-        @Html.ActionLink("Add New Phone Number", "AddPhone", new { login = Model.GuestMail })
+        @Html.ActionLink("Add New Phone Number", "Create", "GuestsPhoneNumbers", new { login = Model.GuestMail }, null)
     </dl>
 </div>
 <p>

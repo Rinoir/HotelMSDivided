@@ -8,6 +8,7 @@ using HotelMSDivided.BLL.Infrastructure;
 using HotelMSDivided.BLL.Interfaces;
 using HotelMSDivided.DAL.Entities;
 using HotelMSDivided.DAL.Interfaces;
+using HotelMSDivided.DAL.Repositories;
 using AutoMapper;
 
 namespace HotelMSDivided.BLL.Services
@@ -22,7 +23,7 @@ namespace HotelMSDivided.BLL.Services
         }
 
         public void Create(GuestModel guest)
-        {
+        {            
             var hotelGuests = new HotelGuests()
             {
                 GuestMail = guest.GuestMail,
@@ -127,6 +128,17 @@ namespace HotelMSDivided.BLL.Services
                 });
             }
             return guestsDTO;
+        }
+
+        public IEnumerable<PhoneNumbersTypesDTO> GetNumbersTypes()
+        {
+            var numberService = new PhoneNumbersTypesService(new ContextUnitOfWork());
+            return numberService.GetNumbersTypes();
+        }
+
+        public bool IsExists(string login)
+        {
+            return (db.HotelGuests.Get(login) != null);
         }
     }
 }

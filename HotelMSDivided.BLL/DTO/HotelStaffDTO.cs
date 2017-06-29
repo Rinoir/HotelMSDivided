@@ -12,7 +12,7 @@ namespace HotelMSDivided.BLL.DTO
         public HotelStaffDTO()
         {
             this.HotelsRoomRegistration = new HashSet<HotelsRoomRegistrationDTO>();
-            this.StaffsPassports = new HashSet<StaffsPassportsDTO>();
+            this.StaffsPassport = new StaffsPassportsDTO();
             this.StaffsPhoneNumbers = new HashSet<StaffsPhoneNumbersDTO>();
         }
 
@@ -28,7 +28,7 @@ namespace HotelMSDivided.BLL.DTO
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HotelsRoomRegistrationDTO> HotelsRoomRegistration { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StaffsPassportsDTO> StaffsPassports { get; set; }
+        public virtual StaffsPassportsDTO StaffsPassport { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StaffsPhoneNumbersDTO> StaffsPhoneNumbers { get; set; }
     }
