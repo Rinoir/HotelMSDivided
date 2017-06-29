@@ -31,8 +31,8 @@ namespace HotelMSDivided.BLL.Services
                 BookingDate = order.BookingDate,
                 ArrivalDate = order.ArrivalDate,
                 LeavingDate = order.LeavingDate,
-                PaymentMethodCode = order.PaymentMethodCode,
-                OrderStatus = order.OrderStatus
+                PaymentMethodCode = GetPaymentMethodCode(order.PaymentMethod),
+                OrderStatus = GetStatusCode(order.OrderStatus)
             });
             db.Save();
         }
@@ -62,11 +62,31 @@ namespace HotelMSDivided.BLL.Services
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<OrdersRegistration, OrdersRegistrationDTO>().ReverseMap();
-                cfg.CreateMap<OrderStatuses, OrderStatusesDTO>().ReverseMap();
-                cfg.CreateMap<PaymentMethods, PaymentMethodsDTO>().ReverseMap();
             });
 
-            return Mapper.Map<OrdersRegistration, OrdersRegistrationDTO>(orders.First());
+            var order = Mapper.Map<OrdersRegistration, OrdersRegistrationDTO>(orders.First());
+            order.PaymentMethod = GetPaymentMethodName(orders.First().PaymentMethodCode);
+            order.OrderStatus = GetStatusName(orders.First().OrderStatus);
+            return order;
+        }
+
+        public OrdersRegistrationDTO GetOrder(int id)
+        {
+            var order = db.OrdersRegistration.Get(id);
+            if (order == null)
+            {
+                return null;
+            }
+
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<OrdersRegistration, OrdersRegistrationDTO>().ReverseMap();
+            });
+
+            var orderDTO = Mapper.Map<OrdersRegistration, OrdersRegistrationDTO>(order);
+            orderDTO.PaymentMethod = GetPaymentMethodName(order.PaymentMethodCode);
+            orderDTO.OrderStatus = GetStatusName(order.OrderStatus);
+            return orderDTO;
         }
 
         public IEnumerable<OrdersRegistrationDTO> GetOrders()
@@ -77,7 +97,15 @@ namespace HotelMSDivided.BLL.Services
                 cfg.CreateMap<OrderStatuses, OrderStatusesDTO>().ReverseMap();
                 cfg.CreateMap<PaymentMethods, PaymentMethodsDTO>().ReverseMap();
             });
-            return Mapper.Map<IEnumerable<OrdersRegistration>, List<OrdersRegistrationDTO>>(db.OrdersRegistration.GetAll());
+            var orders = db.OrdersRegistration.GetAll() as List<OrdersRegistration>;
+            var ordersDTO = Mapper.Map<IEnumerable<OrdersRegistration>, List<OrdersRegistrationDTO>>(orders);
+            for (int i = 0; i < ordersDTO.Count(); i++)
+            {
+                ordersDTO[i].PaymentMethod = GetPaymentMethodName(orders[i].PaymentMethodCode);
+                ordersDTO[i].OrderStatus = GetStatusName(orders[i].OrderStatus);
+            }
+
+            return ordersDTO;
         }
 
         public bool IsExists(string login)
@@ -97,8 +125,8 @@ namespace HotelMSDivided.BLL.Services
                 BookingDate = order.BookingDate,
                 ArrivalDate = order.ArrivalDate,
                 LeavingDate = order.LeavingDate,
-                PaymentMethodCode = order.PaymentMethodCode,
-                OrderStatus = order.OrderStatus
+                PaymentMethodCode = GetPaymentMethodCode(order.PaymentMethod),
+                OrderStatus = GetStatusCode(order.OrderStatus)
             });
             db.Save();
         }
@@ -112,6 +140,47 @@ namespace HotelMSDivided.BLL.Services
         {
             var methodsService = new PaymentMethodsService(new ContextUnitOfWork());
             return methodsService.GetPaymentMethods();
+        }
+
+        public int GetPaymentMethodCode(string name)
+        {
+            var methodService = new PaymentMethodsService(new ContextUnitOfWork());
+            return methodService.GetPaymentMethodId(name);
+        }
+
+        public string GetPaymentMethodName(int? id)
+        {
+            var methodService = new PaymentMethodsService(new ContextUnitOfWork());
+            return methodService.GetPaymentMethod(id.Value);
+        }
+
+        public int GetStatusCode(string name)
+        {
+            var statusService = new OrderStatusesService(new ContextUnitOfWork());
+            return statusService.GetOrderStatusId(name);
+        }
+
+        public string GetStatusName(int? id)
+        {
+            var statusService = new OrderStatusesService(new ContextUnitOfWork());
+            return statusService.GetOrderStatus(id.Value);
+        }
+
+        public void MoveToRegistration(HotelsRoomRegistrationDTO registration)
+        {
+            var reg = new HotelsRoomRegistration()
+            {
+                GuestMail = registration.GuestMail,
+                StaffMail = registration.StaffMail,
+                BookedRoomNumber = registration.BookedRoomNumber,
+                BookingDate = registration.BookingDate,
+                ArrivalDate = registration.ArrivalDate,
+                PaymentMethodCode = GetPaymentMethodCode(registration.PaymentMethod),
+                OrderStatus = GetStatusCode(registration.OrderStatus)
+            };
+
+            db.HotelsRoomRegistration.Create(reg);
+            db.Save();
         }
     }
 }

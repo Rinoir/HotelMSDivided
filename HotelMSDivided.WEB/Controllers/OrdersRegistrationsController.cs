@@ -44,8 +44,8 @@ namespace HotelMSDivided.WEB.Controllers
                     BookingDate = DateTime.Now,
                     ArrivalDate = DateTime.Now,
                     LeavingDate = DateTime.Now,
-                    PaymentMethodCode = 1,
-                    OrderStatus = 1
+                    PaymentMethod = "Cash",
+                    OrderStatus = "Forming"
                 };
 
                 ordersService.Create(order);
@@ -66,7 +66,7 @@ namespace HotelMSDivided.WEB.Controllers
             var order = ordersService.GetOrder(login);
             if (order != null)
             {
-                ViewBag.PaymentMethodCode = new SelectList(ordersService.GetPaymentMethods(), "PaymentMethodCode", "PaymentMethodName", order.PaymentMethodCode);
+                ViewBag.PaymentMethod = new SelectList(ordersService.GetPaymentMethods(), "PaymentMethodName", "PaymentMethodName", order.PaymentMethod);
                 return View(order);
             }
 
@@ -76,11 +76,11 @@ namespace HotelMSDivided.WEB.Controllers
         // POST: OrdersRegistrations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,GuestMail,RoomNumber,BookingDate,ArrivalDate,LeavingDate,PaymentMethodCode,OrderStatus")] OrdersRegistrationDTO ordersRegistration)
+        public ActionResult Edit([Bind(Include = "Id,GuestMail,RoomNumber,BookingDate,ArrivalDate,LeavingDate,PaymentMethod,OrderStatus")] OrdersRegistrationDTO ordersRegistration)
         {
             if (ModelState.IsValid)
             {
-                ordersRegistration.OrderStatus = 2;
+                ordersRegistration.OrderStatus = "Waiting for confirmation";
                 ordersService.Update(ordersRegistration);
                 return RedirectToAction("Index", "HotelRooms");
             }
@@ -88,45 +88,38 @@ namespace HotelMSDivided.WEB.Controllers
             return RedirectToAction("Edit", new { login = ordersRegistration.GuestMail });
         }
 
-        //public ActionResult Confirm(int id)
-        //{
-        //    var order = db.OrdersRegistration.Find(id);
+        public ActionResult Confirm(int id)
+        {
+            var order = ordersService.GetOrder(id);
 
-        //    var registration = new HotelsRoomRegistration()
-        //    {
-        //        GuestMail = order.GuestMail,
-        //        StaffMail = Request.Cookies["Login"].Value,
-        //        BookedRoomNumber = order.RoomNumber,
-        //        BookingDate = order.BookingDate,
-        //        ArrivalDate = order.ArrivalDate,
-        //        LeavingDate = order.LeavingDate,
-        //        PaymentMethodCode = order.PaymentMethodCode,
-        //        OrderStatus = 3
-        //    };
+            var registration = new HotelsRoomRegistrationDTO()
+            {
+                GuestMail = order.GuestMail,
+                StaffMail = Request.Cookies["Login"].Value,
+                BookedRoomNumber = order.RoomNumber,
+                BookingDate = order.BookingDate,
+                ArrivalDate = order.ArrivalDate,
+                LeavingDate = order.LeavingDate,
+                PaymentMethod = order.PaymentMethod,
+                OrderStatus = "Waiting for payment"
+            };
 
-        //    db.HotelsRoomRegistration.Add(registration);
-        //    db.OrdersRegistration.Remove(order);
-        //    db.SaveChanges();
+            ordersService.MoveToRegistration(registration);
+            ordersService.Delete(id);
 
-        //    return RedirectToAction("Index");
-        //}
+            return RedirectToAction("Index");
+        }
 
-        //// GET: OrdersRegistrations/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    OrdersRegistration ordersRegistration = db.OrdersRegistration.Find(id);
-        //    if (ordersRegistration == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    db.OrdersRegistration.Remove(ordersRegistration);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        // GET: OrdersRegistrations/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ordersService.Delete(id);
+            return RedirectToAction("Index");
+        }
 
         protected override void Dispose(bool disposing)
         {

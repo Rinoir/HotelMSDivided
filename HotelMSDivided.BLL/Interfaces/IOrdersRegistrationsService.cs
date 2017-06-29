@@ -12,6 +12,12 @@ namespace HotelMSDivided.BLL.Interfaces
         IEnumerable<OrdersRegistrationDTO> GetOrders();
         IEnumerable<PaymentMethodsDTO> GetPaymentMethods();
         OrdersRegistrationDTO GetOrder(string login);
+        OrdersRegistrationDTO GetOrder(int id);
+        string GetPaymentMethodName(int? id);
+        int GetPaymentMethodCode(string name);
+        string GetStatusName(int? id);
+        int GetStatusCode(string name);
+        void MoveToRegistration(HotelsRoomRegistrationDTO registration);
         void Create(OrdersRegistrationDTO order);
         void Update(OrdersRegistrationDTO order);
         bool IsExists(string login);

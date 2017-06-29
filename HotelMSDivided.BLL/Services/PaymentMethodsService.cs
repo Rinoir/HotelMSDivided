@@ -26,6 +26,22 @@ namespace HotelMSDivided.BLL.Services
             db.Dispose();
         }
 
+        public string GetPaymentMethod(int? id)
+        {
+            var method = from item in db.PaymentMethods.GetAll()
+                         where item.PaymentMethodCode == id
+                         select item;
+            return method.First().PaymentMethodName;
+        }
+
+        public int GetPaymentMethodId(string name)
+        {
+            var method = from item in db.PaymentMethods.GetAll()
+                         where item.PaymentMethodName == name
+                         select item;
+            return method.First().PaymentMethodCode;
+        }
+
         public IEnumerable<PaymentMethodsDTO> GetPaymentMethods()
         {
             Mapper.Initialize(cfg => cfg.CreateMap<PaymentMethods, PaymentMethodsDTO>().ReverseMap());

@@ -23,7 +23,7 @@
             @Html.DisplayNameFor(model => model.LeavingDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PaymentMethods.PaymentMethodName)
+            @Html.DisplayNameFor(model => model.PaymentMethod)
         </th>
         <th></th>
     </tr>
@@ -47,11 +47,11 @@
                 @Html.DisplayFor(modelItem => item.LeavingDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PaymentMethods.PaymentMethodName)
+                @Html.DisplayFor(modelItem => item.PaymentMethod)
             </td>
             <td>
-               <!-- @Html.ActionLink("Confirm", "Confirm", new { id = item.Id }) |
-                @Html.ActionLink("Deny", "Delete", new { id = item.Id })-->
+                @Html.ActionLink("Confirm", "Confirm", new { id = item.Id }) |
+                @Html.ActionLink("Deny", "Delete", new { id = item.Id })
             </td>
         </tr>
     }

@@ -8,6 +8,7 @@ using HotelMSDivided.BLL.Infrastructure;
 using HotelMSDivided.BLL.Interfaces;
 using HotelMSDivided.DAL.Entities;
 using HotelMSDivided.DAL.Interfaces;
+using HotelMSDivided.DAL.Repositories;
 using AutoMapper;
 
 namespace HotelMSDivided.BLL.Services
@@ -23,6 +24,7 @@ namespace HotelMSDivided.BLL.Services
 
         public void Create(HotelsRoomRegistrationDTO registration)
         {
+
             db.HotelsRoomRegistration.Create(new HotelsRoomRegistration
             {
                 GuestMail = registration.GuestMail,
@@ -31,8 +33,8 @@ namespace HotelMSDivided.BLL.Services
                 BookingDate = registration.BookingDate,
                 ArrivalDate = registration.ArrivalDate,
                 LeavingDate = registration.LeavingDate,
-                PaymentMethodCode = registration.PaymentMethodCode,
-                OrderStatus = registration.OrderStatus
+                PaymentMethodCode = GetPaymentMethodCode(registration.PaymentMethod),
+                OrderStatus = GetStatusCode(registration.OrderStatus)
             });
             db.Save();
         }
@@ -40,6 +42,18 @@ namespace HotelMSDivided.BLL.Services
         public void Dispose()
         {
             db.Dispose();
+        }
+
+        public int GetPaymentMethodCode(string name)
+        {
+            var methodService = new PaymentMethodsService(new ContextUnitOfWork());
+            return methodService.GetPaymentMethodId(name);
+        }
+
+        public string GetPaymentMethodName(int? id)
+        {
+            var methodService = new PaymentMethodsService(new ContextUnitOfWork());
+            return methodService.GetPaymentMethod(id.Value);
         }
 
         public HotelsRoomRegistrationDTO GetRegistration(int? id)
@@ -66,6 +80,18 @@ namespace HotelMSDivided.BLL.Services
             return Mapper.Map<IEnumerable<HotelsRoomRegistration>, List<HotelsRoomRegistrationDTO>>(db.HotelsRoomRegistration.GetAll());
         }
 
+        public int GetStatusCode(string name)
+        {
+            var statusService = new OrderStatusesService(new ContextUnitOfWork());
+            return statusService.GetOrderStatusId(name);
+        }
+
+        public string GetStatusName(int? id)
+        {
+            var statusService = new OrderStatusesService(new ContextUnitOfWork());
+            return statusService.GetOrderStatus(id.Value);
+        }
+
         public void Update(HotelsRoomRegistrationDTO registration)
         {
             db.HotelsRoomRegistration.Update(new HotelsRoomRegistration
@@ -78,8 +104,8 @@ namespace HotelMSDivided.BLL.Services
                 ArrivalDate = registration.ArrivalDate,
                 LeavingDate = registration.LeavingDate,
                 ActualLeavingDate = registration.ActualLeavingDate,
-                PaymentMethodCode = registration.PaymentMethodCode,
-                OrderStatus = registration.OrderStatus
+                PaymentMethodCode = GetPaymentMethodCode(registration.PaymentMethod),
+                OrderStatus = GetStatusCode(registration.OrderStatus)
             });
             db.Save();
         }

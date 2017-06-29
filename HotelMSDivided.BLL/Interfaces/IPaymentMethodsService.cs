@@ -10,6 +10,8 @@ namespace HotelMSDivided.BLL.Interfaces
     interface IPaymentMethodsService
     {
         IEnumerable<PaymentMethodsDTO> GetPaymentMethods();
+        string GetPaymentMethod(int? id);
+        int GetPaymentMethodId(string name);
         void Dispose();
     }
 }

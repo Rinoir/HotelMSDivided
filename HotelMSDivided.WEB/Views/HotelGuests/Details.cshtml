@@ -99,7 +99,7 @@
             </dd>
 
             <dd>
-                Status: @Html.DisplayFor(model => order.OrderStatuses.StatusName)
+                Status: @Html.DisplayFor(model => order.OrderStatus)
             </dd>
         }
 
@@ -133,12 +133,6 @@
                         <th>
                             @Html.DisplayNameFor(model => registrations.First().ActualLeavingDate)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => registrations.First().PaymentMethods.PaymentMethodName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => registrations.First().OrderStatuses.StatusName)
-                        </th>
                     </tr>
                     @foreach (var order in registrations)
                     {
@@ -157,12 +151,6 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(model => order.ActualLeavingDate)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => order.PaymentMethods.PaymentMethodName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => order.OrderStatuses.StatusName)
                             </td>
                         </tr>
                     }

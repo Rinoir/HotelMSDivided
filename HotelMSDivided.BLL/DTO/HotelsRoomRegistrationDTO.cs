@@ -16,13 +16,13 @@ namespace HotelMSDivided.BLL.DTO
         public System.DateTime ArrivalDate { get; set; }
         public System.DateTime LeavingDate { get; set; }
         public Nullable<System.DateTime> ActualLeavingDate { get; set; }
-        public int PaymentMethodCode { get; set; }
-        public int OrderStatus { get; set; }
+        public string PaymentMethod { get; set; }
+        public string OrderStatus { get; set; }
 
         //public virtual HotelGuestsDTO HotelGuests { get; set; }
         //public virtual HotelRoomsDTO HotelRooms { get; set; }
-        public virtual OrderStatusesDTO OrderStatuses { get; set; }
-        public virtual PaymentMethodsDTO PaymentMethods { get; set; }
+        //public virtual OrderStatusesDTO OrderStatuses { get; set; }
+        //public virtual PaymentMethodsDTO PaymentMethods { get; set; }
         //public virtual HotelStaffDTO HotelStaff { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace HotelMSDivided.WEB.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(hotelGuest);
         }
                 
